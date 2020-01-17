@@ -1,6 +1,12 @@
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { Header, Posts, Poster } from '../components'
+
 const Home = () => (
   <>
-    <div>Home Page Works</div>
+    <CssBaseline />
+    <Header />
+    <Poster />
+    <Posts />
   </>
 )
 
