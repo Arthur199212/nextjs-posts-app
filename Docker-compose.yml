@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  db:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: auth
+      MONGO_USERNAME: admin
+      MONGO_PASSWORD: secret
+    volumes:
+      - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
+    ports:
+      - '27017:27017'
+
+  cache:
+    image: redis:alpine
+    ports:
+      - '6379:6379'
+    command: ['--requirepass "secret"']
