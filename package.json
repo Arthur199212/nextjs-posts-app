@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "up": "docker-compose up -d",
+    "postup": "npm run dev --prefix api",
+    "down": "docker-compose down"
   },
   "keywords": [],
   "author": "",
