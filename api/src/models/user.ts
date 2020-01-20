@@ -1,4 +1,10 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Document } from 'mongoose'
+
+interface UserDocument extends Document {
+  email: string,
+  password: string,
+  matchesPassword: (password: string) => Promise<boolean>
+}
 
 const userSchema = new Schema({
   email: String,
@@ -7,4 +13,8 @@ const userSchema = new Schema({
   timestamps: true
 })
 
-export default model('User', userSchema)
+userSchema.methods.matchesPassword = function (password: string) {
+  return this.password === password
+}
+
+export const User = model<UserDocument>('User', userSchema)

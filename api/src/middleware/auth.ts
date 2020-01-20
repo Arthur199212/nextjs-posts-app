@@ -9,3 +9,11 @@ export const guest = (req: Request, res: Response, next: NextFunction) => {
 
   next()
 }
+
+export const auth = (req: Request, res: Response, next: NextFunction) => {
+  if (!isLoggedIn(req)) {
+    return next(new Unatherized('You must be logged in.'))
+  }
+
+  next()
+}
