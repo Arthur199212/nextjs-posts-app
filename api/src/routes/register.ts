@@ -17,7 +17,6 @@ router.post('/register', guest, catchAsync(async (req, res) => {
 
   if (found) throw new BadRequest('Invalid email')
 
-  // TODO hash password
   const user = await User.create({
     email, name, password
   })

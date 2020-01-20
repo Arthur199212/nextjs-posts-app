@@ -3,7 +3,7 @@ import { IN_PROD } from '../config'
 
 const HALF_HOUR = 1000 * 60 * 30
 
-const {
+export const {
   SESSION_SECRET = 'secret',
   SESSION_NAME = 'sid',
   SESSION_IDEL_TIMEOUT = HALF_HOUR
