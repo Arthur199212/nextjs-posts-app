@@ -2,7 +2,7 @@ import express from 'express'
 import session from 'express-session'
 import { Store } from 'express-session'
 import { SESSION_OPTIONS } from './config'
-import { register, login } from './routes'
+import { register, login, home } from './routes'
 import { notFound, serverError } from './middleware'
 
 const createApp = (store: Store) => {
@@ -12,12 +12,9 @@ const createApp = (store: Store) => {
 
   app.disable('x-powered-by')
 
-  app.use(
-    session({
-      ...SESSION_OPTIONS,
-      store
-    })
-  )
+  app.use(session({ ...SESSION_OPTIONS, store }))
+
+  app.use(home)
 
   app.use(register)
 
