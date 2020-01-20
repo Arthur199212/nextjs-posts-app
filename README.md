@@ -3,11 +3,11 @@
 ## MVP
 
 User
-- Can register
-- Can login
-- Can logout
-- Can view/create/update/delete posts
-- Can bookmark posts
+- [x] Can register
+- [x] Can login
+- [x] Can logout
+- [ ] Can view/create/update/delete posts
+- [ ] Can bookmark posts
 
 ```sh
 
@@ -16,6 +16,9 @@ curl -v -X POST localhost:4000/register -H "Content-Type:application/json" -d "{
 
 # Login
 curl -v -X POST localhost:4000/login -H "Content-Type:application/json" -d "{\"email\":\"arthur@gmail.com\",\"password\":\"Secret12\"}"
+
+# Logout
+curl -v -X POST localhost:4000/logout --cookie "sid=s%3A8vDQNisgzetBC_GGcGjg5TG0mhFHw3XF.esGhOENn%2FjQCiaoIhxKEJHuhbFBAjdZEApsoZvrfh2s"
 
 ```
 
