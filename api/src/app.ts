@@ -20,7 +20,7 @@ const createApp = (store: Store) => {
 
   app.use(login)
 
-  app.use(notFound)
+  // app.use(notFound)
   
   app.use(serverError)
 

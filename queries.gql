@@ -1,0 +1,41 @@
+mutation {
+  createPost(title: "Title 1", body: "Descriptiona asd asdafafldskj asdkfg askg.") {
+    id
+    title
+    body
+    createdAt
+    updatedAt
+  }
+}
+
+{
+  posts {
+    id
+    title
+    body
+    createdAt
+  }
+}
+
+{
+  post(id: "5e25b154a1389d27e8f4fb44") {
+    id
+    title
+    body
+    createdAt
+  }
+}
+
+mutation {
+  updatePost(id: "5e25b154a1389d27e8f4fb45", title: "New Title", body: "Descriptiona asd asdafafldskj asdkfg askg.") {
+    id
+    title
+    body
+    createdAt
+    updatedAt
+  }
+}
+
+mutation {
+  deletePost(id: "5e25b904434c6d1eec02162c")
+}
