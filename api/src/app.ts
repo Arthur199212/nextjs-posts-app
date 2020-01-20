@@ -2,6 +2,8 @@ import express from 'express'
 import session from 'express-session'
 import { Store } from 'express-session'
 import { SESSION_OPTIONS } from './config'
+import { register } from './routes'
+import { notFound, serverError } from './middleware'
 
 const createApp = (store: Store) => {
   const app = express()
@@ -17,9 +19,11 @@ const createApp = (store: Store) => {
     })
   )
 
-  app.get('/', (req, res) => {
-    res.json({ message: 'OK' })
-  })
+  app.use(register)
+
+  app.use(notFound)
+  
+  app.use(serverError)
 
   return app
 }
