@@ -1,3 +1,5 @@
 import post from './post'
 
-export default [ post ]
+import user from './user'
+
+export default [ post, user ]
