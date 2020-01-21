@@ -1,12 +1,12 @@
 import { Request, Response } from 'express'
-import { Post } from '../models'
+import { Post, User } from '../models'
 
 interface Context {
   req: Request,
   res: Response
 }
 
-const resolvers = {
+export default {
   Query: {
     hello: () => 'Hello world!',
     posts: async (parent: any, args: any, { req, res }: Context, info: any) => {
@@ -28,11 +28,19 @@ const resolvers = {
   },
 
   Mutation: {
-    createPost: async (parent: any, args: any, ctx: Context, info: any) => {
+    createPost: async (parent: any, args: any, { req, res }: Context, info: any) => {
       const { title, body } = args
 
+      const { userId } = req.session!
+
       const post = await Post.create({
-        title, body
+        title, body, user: userId
+      })
+
+      await User.updateOne({ _id: { '$in': userId } }, {
+        $push: {
+          posts: post
+        }
       })
 
       return post
@@ -60,7 +68,11 @@ const resolvers = {
 
       return 'OK'
     },
+  },
+
+  Post: {
+    user: async (post: any, args: any, contex: Context, info: any) => {
+      return (await post.populate('user').execPopulate()).user
+    }
   }
 }
-
-export default resolvers

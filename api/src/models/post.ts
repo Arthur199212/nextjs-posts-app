@@ -2,7 +2,11 @@ import { Schema, model } from 'mongoose'
 
 const postSchema = new Schema({
   title: String,
-  body: String
+  body: String,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
 }, {
   timestamps: true
 })

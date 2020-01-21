@@ -6,7 +6,7 @@ User
 - [x] Can register
 - [x] Can login
 - [x] Can logout
-- [ ] Can view/create/update/delete posts
+- [x] Can view/create/update/delete posts
 - [ ] Can bookmark posts
 
 ```sh

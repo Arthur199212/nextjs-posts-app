@@ -13,15 +13,22 @@ mutation {
     id
     title
     body
-    createdAt
+    user {
+      id
+      email
+    }
   }
 }
 
 {
-  post(id: "5e25b154a1389d27e8f4fb44") {
+  post(id: "5e26c846bb32334748ffe858") {
     id
     title
     body
+    user {
+      id
+      email
+    }
     createdAt
   }
 }
@@ -32,4 +39,16 @@ mutation {
 
 mutation {
   deletePost(id: "5e25b904434c6d1eec02162c")
+}
+
+{
+  users {
+    id
+    email
+    posts {
+      id
+      title
+      body
+    }
+  }
 }
