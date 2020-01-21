@@ -17,6 +17,7 @@ export default gql`
     id: ID!
     title: String!
     body: String!
+    user: User!
     createdAt: String!
     updatedAt: String!
   }

@@ -6,16 +6,18 @@ interface Context {
   res: Response
 }
 
-const resolvers = {
+export default {
   Query: {
     users: async (parent: any, args: any, contex: Context, info: any) => {
       const users = await User.find({})
 
-      console.log(users)
-
       return users
+    }
+  },
+
+  User: {
+    posts: async (user: any, args: any, contex: Context, info: any) => {
+      return (await user.populate('posts').execPopulate()).posts
     }
   }
 }
-
-export default resolvers

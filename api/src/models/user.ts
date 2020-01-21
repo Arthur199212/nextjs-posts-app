@@ -10,7 +10,11 @@ interface UserDocument extends Document {
 
 const userSchema = new Schema({
   email: String,
-  password: String
+  password: String,
+  posts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post'
+  }]
 }, {
   timestamps: true
 })
