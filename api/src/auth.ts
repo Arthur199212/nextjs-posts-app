@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { SESSION_NAME } from './config'
+import { Unatherized } from './errors'
 
 export const logIn = (req: Request, userId: string) =>
   req.session!.userId = userId
@@ -17,3 +18,15 @@ export const logOut = (req: Request, res: Response) =>
       resolve()
     })
   })
+
+export const ensureLoggedIn = (req: Request) => {
+  if (!isLoggedIn(req)) {
+    throw new Unatherized('You must be logged in.')
+  }
+}
+
+export const ensureLoggedOut = (req: Request) => {
+  if (isLoggedIn(req)) {
+    throw new Unatherized('You are already logged in.')
+  }
+}

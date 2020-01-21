@@ -9,14 +9,12 @@ interface Context {
 const resolvers = {
   Query: {
     hello: () => 'Hello world!',
-    posts: async (parent: any, args: any, ctx: Context, info: any) => {
-      // TODO auth
+    posts: async (parent: any, args: any, { req, res }: Context, info: any) => {
       const post = await Post.find({})
 
       return post
     },
     post: async (parent: any, args: any, ctx: Context, info: any) => {
-      // TODO auth
       const { id } = args
 
       if (!id) throw new Error('Bad Request')
@@ -31,7 +29,6 @@ const resolvers = {
 
   Mutation: {
     createPost: async (parent: any, args: any, ctx: Context, info: any) => {
-      // TODO auth
       const { title, body } = args
 
       const post = await Post.create({
@@ -41,7 +38,6 @@ const resolvers = {
       return post
     },
     updatePost: async (parent: any, args: any, ctx: Context, info: any) => {
-      // TODO auth
       const { id, title, body } = args
 
       if (!title || !body) throw new Error('Bad Request')
@@ -53,10 +49,9 @@ const resolvers = {
 
       if (!post) throw new Error('Bad Request')
 
-      return post
+      return 'OK'
     },
     deletePost: async (parent: any, args: any, ctx: Context, info: any) => {
-      // TODO auth
       const { id } = args
 
       const post = await Post.deleteOne({ _id: id })

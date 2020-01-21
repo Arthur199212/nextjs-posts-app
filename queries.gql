@@ -27,13 +27,7 @@ mutation {
 }
 
 mutation {
-  updatePost(id: "5e25b154a1389d27e8f4fb45", title: "New Title", body: "Descriptiona asd asdafafldskj asdkfg askg.") {
-    id
-    title
-    body
-    createdAt
-    updatedAt
-  }
+  updatePost(id: "5e26930df0d08d0a247aa4eb", title: "New Title", body: "Descriptiona asd asdafafldskj asdkfg askg.")
 }
 
 mutation {

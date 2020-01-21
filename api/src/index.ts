@@ -2,11 +2,8 @@ import mongoose from 'mongoose'
 import session from 'express-session'
 import Redis from 'ioredis'
 import connectRedis from 'connect-redis'
-import { ApolloServer } from 'apollo-server-express'
 import { APP_PORT, MONGO_URI, MONGO_OPTIONS, REDIS_OPTIONS } from './config'
 import createApp from './app'
-import typeDefs from './typeDefs'
-import resolvers from './resolvers'
 
 ;(async () => {
   try {
@@ -18,15 +15,7 @@ import resolvers from './resolvers'
 
     const store = new RedisStore({ client })
 
-    const app = createApp(store)
-
-    const server = new ApolloServer({
-      typeDefs,
-      resolvers,
-      context: ({ req, res }) => ({ res, req })
-    })
-
-    server.applyMiddleware({ app })
+    const { app, server } = createApp(store)
 
     app.listen(APP_PORT, () =>
       console.log(

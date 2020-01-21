@@ -1,16 +1,18 @@
 import { gql } from 'apollo-server-express'
 
 export default gql`
+  directive @auth on FIELD_DEFINITION
+
   type Query {
     hello: String
-    posts: [Post!]!
-    post(id: String): Post
+    posts: [Post!]! @auth
+    post(id: String): Post @auth
   }
 
   type Mutation {
-    createPost(title: String, body: String): Post
-    updatePost(id: ID, title: String, body: String): Post
-    deletePost(id: ID): String
+    createPost(title: String, body: String): Post @auth
+    updatePost(id: ID, title: String, body: String): String @auth
+    deletePost(id: ID): String @auth
   }
 
   type Post {

@@ -1,9 +1,14 @@
 import express from 'express'
 import session from 'express-session'
 import { Store } from 'express-session'
-import { SESSION_OPTIONS } from './config'
+import cookieParser from 'cookie-parser'
+import { ApolloServer } from 'apollo-server-express'
+import { SESSION_OPTIONS, APOLLO_OPTIONS } from './config'
 import { register, login, home } from './routes'
 import { notFound, serverError } from './middleware'
+import typeDefs from './typeDefs'
+import resolvers from './resolvers'
+import schemaDirectives from './directives'
 
 const createApp = (store: Store) => {
   const app = express()
@@ -13,6 +18,8 @@ const createApp = (store: Store) => {
   app.disable('x-powered-by')
 
   app.use(session({ ...SESSION_OPTIONS, store }))
+
+  app.use(cookieParser())
 
   app.use(home)
 
@@ -24,7 +31,17 @@ const createApp = (store: Store) => {
   
   app.use(serverError)
 
-  return app
+  const server = new ApolloServer({
+    ...APOLLO_OPTIONS,
+    typeDefs,
+    resolvers,
+    context: ({ req, res }) => ({ res, req }),
+    schemaDirectives
+  })
+
+  server.applyMiddleware({ app, cors: false })
+
+  return { app, server }
 }
 
 export default createApp
