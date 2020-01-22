@@ -6,7 +6,9 @@ import { Button, Container, Toolbar, Typography } from '@material-ui/core'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
+      display: 'flex',
+      justifyContent: 'space-between',
+      width: '100%'
     },
     appBar: {
       backgroundColor: '#ffffff',
@@ -15,9 +17,12 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     title: {
-      flexGrow: 1,
-      color: '#3F51B5'
+      color: '#3F51B5',
+      cursor: 'pointer'
     },
+    buttonsContainer: {
+      display: 'flex',
+    }
   }),
 )
 
@@ -26,21 +31,21 @@ const Header = () => {
 
   return (
     <Container maxWidth='lg'>
-      <div className={classes.root}>
-        <Toolbar>
-          <Link href='/'>
-            <Typography className={classes.title} variant='h6'>
-              Posts App
-            </Typography>
-          </Link>
+      <Toolbar className={classes.root}>
+        <Link href='/'>
+          <Typography className={classes.title} variant='h6'>
+            Posts App
+          </Typography>
+        </Link>
+        <div className={classes.buttonsContainer}>
           <Link href='/register'>
             <Button className={classes.menuButton} color='primary'>Register</Button>
           </Link>
           <Link href='/login'>
             <Button className={classes.menuButton} color='primary'>Login</Button>
           </Link>
-        </Toolbar>
-      </div>
+        </div>
+      </Toolbar>
     </Container>
   )
 }
