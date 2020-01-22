@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import session from 'express-session'
 import { Store } from 'express-session'
 import cookieParser from 'cookie-parser'
@@ -13,6 +14,11 @@ import schemaDirectives from './directives'
 const createApp = (store: Store) => {
   const app = express()
 
+  app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+  }))
+  
   app.use(express.json())
 
   app.disable('x-powered-by')
