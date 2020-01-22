@@ -4,6 +4,8 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Container, Paper, Typography, Button } from '@material-ui/core'
 import { registerSchema } from '../validation'
 import { MyTextField } from '../components'
+import { register } from '../utils'
+import { registerRequestData } from '../types'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -57,6 +59,19 @@ const formFields: any = [
 const Register = () => {
   const classes = useStyles()
 
+  const handleSubmit = async (values: registerRequestData, { setSubmitting, resetForm }: any) => {
+    try {
+      setSubmitting(true)
+
+      await register(values)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setSubmitting(false)
+      resetForm()
+    }
+  }
+
   return (
     <Layout>
       <Container maxWidth='md'>
@@ -68,15 +83,7 @@ const Register = () => {
           <Formik
             initialValues={initialValues}
             validationSchema={registerSchema}
-            onSubmit={(values, { setSubmitting, resetForm }) => {
-              setSubmitting(true)
-
-              // TODO add submit logic
-              console.log(values)
-
-              setSubmitting(false)
-              resetForm()
-            }}
+            onSubmit={handleSubmit}
           >{({ values, isSubmitting, errors }) => (
             <Form className={classes.form}>
               {formFields.map(({ name, type, label }: any) => (
