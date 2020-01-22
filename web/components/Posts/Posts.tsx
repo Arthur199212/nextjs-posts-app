@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme: Theme) =>
     post: {
       display: 'flex',
       justifyContent: 'center',
-      // padding: theme.spacing(2),
     },
   }),
 )
@@ -37,16 +36,13 @@ const Posts = () => {
               </Box>
         </Typography>
 
-        {/* <div className={classes.root}> */}
         <Grid container spacing={3}>
           {posts.map(post => (
             <Grid className={classes.post} item xs={4} key={post.id} >
-              {/* <Paper className={classes.paper}>xs=12</Paper> */}
               <PostPreview />
             </Grid>
           ))}
         </Grid>
-        {/* </div> */}
       </Container>
     </>
   )

@@ -1,8 +1,7 @@
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { Header, Posts, Poster } from '../components'
-
-import gql from 'graphql-tag'
+import { Layout, Posts, Poster } from '../components'
+import { withApollo } from '../lib/apollo'
 import { useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 
 const TEST_QUERY = gql`
   {
@@ -11,17 +10,15 @@ const TEST_QUERY = gql`
 `
 
 const Home = () => {
-  const { data } = useQuery(TEST_QUERY);
+  const { data } = useQuery(TEST_QUERY)
 
   console.log(data)
 
   return (
-    <>
-      <CssBaseline />
-      <Header />
+    <Layout>
       <Poster />
       <Posts />
-    </>
+    </Layout>
 )}
 
-export default Home
+export default withApollo(Home)

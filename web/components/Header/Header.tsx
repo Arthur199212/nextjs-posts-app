@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { Button, Container, Toolbar, Typography } from '@material-ui/core'
 
@@ -27,11 +28,17 @@ const Header = () => {
     <Container maxWidth='lg'>
       <div className={classes.root}>
         <Toolbar>
-          <Typography className={classes.title} variant='h6'>
-            Posts App
-          </Typography>
-          <Button className={classes.menuButton} color='primary'>Register</Button>
-          <Button className={classes.menuButton} color='primary'>Login</Button>
+          <Link href='/'>
+            <Typography className={classes.title} variant='h6'>
+              Posts App
+            </Typography>
+          </Link>
+          <Link href='/register'>
+            <Button className={classes.menuButton} color='primary'>Register</Button>
+          </Link>
+          <Link href='/login'>
+            <Button className={classes.menuButton} color='primary'>Login</Button>
+          </Link>
         </Toolbar>
       </div>
     </Container>
