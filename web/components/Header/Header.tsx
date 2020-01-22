@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       flexGrow: 1,
-      color: '#764ABC'
+      color: '#3F51B5'
     },
   }),
 )
