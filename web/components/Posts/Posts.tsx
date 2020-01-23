@@ -1,31 +1,25 @@
 import React from 'react'
+import { useQuery } from '@apollo/react-hooks'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { Box, Container, Typography, Grid } from '@material-ui/core'
 import { PostPreview } from '../'
+import { POSTS_QUERY } from './queries'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     post: {
       display: 'flex',
-      justifyContent: 'center',
-    },
-  }),
+      justifyContent: 'center'
+    }
+  })
 )
-
-const posts = [
-  { id: '1' },
-  { id: '2' },
-  { id: '3' },
-  { id: '4' },
-  { id: '5' },
-  { id: '6' },
-]
 
 const Posts = () => {
   const classes = useStyles()
+  const { data } = useQuery(POSTS_QUERY)
 
   return (
     <>
@@ -37,9 +31,9 @@ const Posts = () => {
         </Typography>
 
         <Grid container spacing={3}>
-          {posts.map(post => (
+          {data && data.posts.map((post: any) => (
             <Grid className={classes.post} item xs={4} key={post.id} >
-              <PostPreview />
+              <PostPreview post={post} />
             </Grid>
           ))}
         </Grid>

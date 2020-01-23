@@ -1,11 +1,18 @@
-export interface registerRequestData {
+export interface registerRequestDocument {
   name: string
   email: string
   password: string
   passwordConfirmation: string
 }
 
-export interface loginRequestData {
+export interface loginRequestDocument {
   email: string
   password: string
+}
+
+export interface postDocument {
+  title: string
+  body: string
+  user: { id: string, name: string },
+  createdAt: string
 }

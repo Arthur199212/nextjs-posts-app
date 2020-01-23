@@ -1,7 +1,7 @@
-import { loginRequestData, registerRequestData } from '../types'
+import { loginRequestDocument, registerRequestDocument } from '../types'
 import { LOGIN_URL, REGISTER_URL } from '../config'
 
-export const logIn = async (data: loginRequestData) => {
+export const logIn = async (data: loginRequestDocument) => {
   try {
     const res = await fetch(LOGIN_URL, {
       method: 'POST',
@@ -18,7 +18,7 @@ export const logIn = async (data: loginRequestData) => {
   }
 }
 
-export const register = async (data: registerRequestData) => {
+export const register = async (data: registerRequestDocument) => {
   try {
     const res = await fetch(REGISTER_URL, {
       method: 'POST',

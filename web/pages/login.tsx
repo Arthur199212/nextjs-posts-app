@@ -5,7 +5,7 @@ import { Container, Paper, Typography, Button } from '@material-ui/core'
 import { loginSchema } from '../validation'
 import { MyTextField } from '../components'
 import { logIn } from '../utils'
-import { loginRequestData } from '../types'
+import { loginRequestDocument } from '../types'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       marginTop: 25
     }
-  }),
+  })
 )
 
 const initialValues = {
@@ -47,7 +47,7 @@ const formFields: any = [
 const Register = () => {
   const classes = useStyles()
 
-  const handleSubmit = async (values: loginRequestData, { setSubmitting, resetForm }: any) => {
+  const handleSubmit = async (values: loginRequestDocument, { setSubmitting, resetForm }: any) => {
     try {
       setSubmitting(true)
 
@@ -94,11 +94,6 @@ const Register = () => {
               >
                 Submit
               </Button>
-              {/* // TODO delete later */}
-              <div style={{ marginTop: 20, width: '100%' }}>
-                <pre>{JSON.stringify(values, null, 2)}</pre>
-                <pre>{JSON.stringify(errors, null, 2)}</pre>
-              </div>
             </Form>
           )}</Formik>
         </Paper>
