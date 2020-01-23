@@ -9,7 +9,13 @@ import { postDocument } from '../../types'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {
+      display: 'flex',
+      flexDirection: 'column',
+      width: '100%',
       maxWidth: 345
+    },
+    cardContent: {
+      flexGrow: 1
     },
     media: {
       height: 0,
@@ -50,7 +56,7 @@ const PostPreview: FC<postPreviewProps> = ({ post = initialData }) => {
         title={title}
       />
 
-      <CardContent>
+      <CardContent className={classes.cardContent}>
         <Typography className={classes.header} variant='h6' color='initial' component='h3'>
           {title}
         </Typography>

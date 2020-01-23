@@ -1,9 +1,9 @@
-import { Layout } from '../components'
 import { Formik, Form } from 'formik'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Container, Paper, Typography, Button } from '@material-ui/core'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import { withApollo } from '../lib/apollo'
 import { loginSchema } from '../validation'
-import { MyTextField } from '../components'
+import { Layout, MyTextField } from '../components'
 import { logIn } from '../utils'
 import { loginRequestDocument } from '../types'
 
@@ -44,7 +44,7 @@ const formFields: any = [
   }
 ]
 
-const Register = () => {
+const Login = () => {
   const classes = useStyles()
 
   const handleSubmit = async (values: loginRequestDocument, { setSubmitting, resetForm }: any) => {
@@ -72,11 +72,11 @@ const Register = () => {
             initialValues={initialValues}
             validationSchema={loginSchema}
             onSubmit={handleSubmit}
-          >{({ values, isSubmitting, errors }) => (
+          >{({ isSubmitting, errors }) => (
             <Form className={classes.form}>
               {formFields.map(({ name, type, label }: any) => (
                 <MyTextField
-                  key={`input-field-${name}`}
+                  key={`login-input-field-${name}`}
                   className={classes.input}
                   name={name}
                   type={type}
@@ -95,11 +95,12 @@ const Register = () => {
                 Submit
               </Button>
             </Form>
-          )}</Formik>
+          )}
+          </Formik>
         </Paper>
       </Container>
     </Layout>
   )
 }
 
-export default Register
+export default withApollo(Login)

@@ -2,18 +2,15 @@ import { useField } from 'formik'
 import { TextField } from '@material-ui/core'
 import { FC } from 'react'
 
-const MyTextField: FC<any> = ({ className, errors, fullWidth, label, type, ...props }) => {
-  const [field, meta] = useField(props)
+const MyTextField: FC<any> = ({ name, ...props }) => {
+  const [field, meta] = useField(name)
 
   const errorText = meta.error && meta.touched ? meta.error : ''
 
   return (
     <TextField
-      className={className}
+      {...props}
       {...field}
-      type={type}
-      label={label}
-      fullWidth
       helperText={errorText}
       error={!!errorText}
     />
