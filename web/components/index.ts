@@ -10,4 +10,6 @@ export * from './Poster'
 
 export * from './PostPreview'
 
+export * from './PostPreviewMenu'
+
 export * from './Posts'

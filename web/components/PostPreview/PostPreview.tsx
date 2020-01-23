@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import { postDocument } from '../../types'
+import { PostPreviewMenu } from '../'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,9 +71,10 @@ const PostPreview: FC<postPreviewProps> = ({ post = initialData }) => {
           <Avatar aria-label='post' className={classes.avatar}> </Avatar>
         }
         action={
-          <IconButton aria-label='settings'>
-            <MoreVertIcon />
-          </IconButton>
+          <PostPreviewMenu />
+          // <IconButton aria-label='settings'>
+          //   <MoreVertIcon />
+          // </IconButton>
         }
         title={name}
         subheader={createdAt}
