@@ -9,6 +9,7 @@ interface UserDocument extends Document {
 }
 
 const userSchema = new Schema({
+  name: String,
   email: String,
   password: String,
   posts: [{

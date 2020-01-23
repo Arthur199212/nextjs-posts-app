@@ -7,6 +7,7 @@ export default gql`
 
   type User {
     id: ID!
+    name: String!
     email: String!
     posts: [Post!]!
     createdAt: String!

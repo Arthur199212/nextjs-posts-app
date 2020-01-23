@@ -3,8 +3,8 @@ import { gql } from 'apollo-server-express'
 export default gql`
   extend type Query {
     hello: String
-    posts: [Post!]! @auth
-    post(id: String): Post @auth
+    posts: [Post!]!
+    post(id: String): Post
   }
 
   extend type Mutation {
