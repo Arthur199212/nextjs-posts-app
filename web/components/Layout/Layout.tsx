@@ -1,12 +1,13 @@
 import React, { FC } from 'react'
-import { Header } from '../'
 import { CssBaseline } from '@material-ui/core'
+import { Header, CreatePostDialog } from '../'
 
 const Layout: FC = ({ children }) => (
   <>
-    <CssBaseline/>
-    <Header/>
+    <CssBaseline />
+    <Header />
     {children}
+    <CreatePostDialog />
   </>
 )
 

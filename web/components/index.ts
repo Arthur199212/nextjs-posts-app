@@ -1,3 +1,5 @@
+export * from './CreatePostDialog'
+
 export * from './Header'
 
 export * from './Layout'
