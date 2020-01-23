@@ -95,6 +95,7 @@ const CreatePostDialog = () => {
                   label='Post Title'
                   margin='dense'
                   fullWidth
+                  autoComplete='off'
                 />
                 <MyTextField
                   name='body'

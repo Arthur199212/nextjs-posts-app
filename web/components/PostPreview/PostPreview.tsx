@@ -1,9 +1,8 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import {
-  Card, CardHeader, CardMedia, CardContent, Avatar, IconButton, Typography
+  Card, CardHeader, CardMedia, CardContent, Avatar, Typography
 } from '@material-ui/core'
-import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import { postDocument } from '../../types'
 import { PostPreviewMenu } from '../'
 
@@ -34,6 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 const initialData = {
+  id: '',
   title: '',
   body: '',
   user: { id: '', name: '' },
@@ -47,7 +47,7 @@ interface postPreviewProps {
 const PostPreview: FC<postPreviewProps> = ({ post = initialData }) => {
   const classes = useStyles()
 
-  const { title, body, user: { id, name }, createdAt } = post
+  const { id, title, body, user: { name }, createdAt } = post
 
   return (
     <Card className={classes.card}>
@@ -71,10 +71,7 @@ const PostPreview: FC<postPreviewProps> = ({ post = initialData }) => {
           <Avatar aria-label='post' className={classes.avatar}> </Avatar>
         }
         action={
-          <PostPreviewMenu />
-          // <IconButton aria-label='settings'>
-          //   <MoreVertIcon />
-          // </IconButton>
+          <PostPreviewMenu postId={id} />
         }
         title={name}
         subheader={createdAt}

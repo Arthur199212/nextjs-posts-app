@@ -11,6 +11,7 @@ export interface loginRequestDocument {
 }
 
 export interface postDocument {
+  id: string
   title: string
   body: string
   user: { id: string, name: string },
