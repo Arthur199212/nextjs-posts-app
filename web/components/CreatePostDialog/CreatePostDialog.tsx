@@ -118,7 +118,7 @@ const CreatePostDialog = () => {
                   disabled={isSubmitting}
                   onClick={handleClose}
                 >
-                  Subscribe
+                  Create
               </Button>
               </DialogActions>
             </Form>

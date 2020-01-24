@@ -35,7 +35,7 @@ const Posts = () => {
 
   return (
     <Container maxWidth='md'>
-      {data && (
+      {data && !!data.posts.length && (
         <div className={classes.headerBox}>
           <Typography className={classes.header} variant='h5' component='span'>
             All posts
