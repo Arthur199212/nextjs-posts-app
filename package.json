@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "up": "docker-compose up -d",
-    "postup": "npm run dev --prefix api",
-    "down": "docker-compose down"
+    "postup": "npm run dev",
+    "down": "docker-compose down",
+    "dev": "npm run dev --prefix api"
   },
   "keywords": [],
   "author": "",
