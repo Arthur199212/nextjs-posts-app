@@ -33,16 +33,16 @@ docker exec -it nextjs-app_db_1 mongo -u admin -p secret auth
 ### Back-End
 
 - Node + Express
+- GraphQL + Apollo Server
+- express-session + Redis
 - MongoDB + Mongoose
-- Apollo GraphQL (Server)
-- Redis
 
 ### Front-End
 
-- Next.js + React
-- Material-UI
-- Apollo GraphQL (Client)
+- Next.js + React 16.8+
 - TypeScript
+- Apollo Client
+- Material-UI
 
 ### DevOps
 - Docker
