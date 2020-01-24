@@ -1,8 +1,6 @@
 # nextjs-app
 
-## MVP
-
-User
+API
 - [x] Can register
 - [x] Can login
 - [x] Can logout
@@ -27,3 +25,22 @@ curl -v -X POST localhost:4000/logout --cookie "sid=s%3A8vDQNisgzetBC_GGcGjg5TG0
 docker exec -it nextjs-app_db_1 mongo -u admin -p secret auth
 
 ```
+
+## Technologies
+
+### Back-End
+
+- Node + Express
+- MongoDB + Mongoose
+- Apollo GraphQL (Server)
+- Redis
+
+### Front-End
+
+- Next.js + React
+- Material-UI
+- Apollo GraphQL (Client)
+- TypeScript
+
+### DevOps
+- Docker
