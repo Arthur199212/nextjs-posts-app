@@ -1,3 +1,5 @@
+import Router from 'next/router'
+import { useApolloClient } from '@apollo/react-hooks'
 import { Formik, Form } from 'formik'
 import { Container, Paper, Typography, Button } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
@@ -5,6 +7,7 @@ import { withApollo } from '../lib/apollo'
 import { loginSchema } from '../validation'
 import { Layout, MyTextField } from '../components'
 import { logIn } from '../utils'
+import { ME_QUERY } from '../queries'
 import { loginRequestDocument } from '../types'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -47,11 +50,26 @@ const formFields: any = [
 const Login = () => {
   const classes = useStyles()
 
+  const client = useApolloClient()
+
   const handleSubmit = async (values: loginRequestDocument, { setSubmitting, resetForm }: any) => {
     try {
       setSubmitting(true)
 
-      await logIn(values)
+      const res = await logIn(values)
+
+      const { user: { id, name } } = res
+
+      client.writeQuery({
+        query: ME_QUERY,
+        data: {
+          me: {
+            id, name, __typename: 'QUERY'
+          },
+        }
+      })
+
+      Router.push('/')
     } catch (err) {
       console.log(err)
     } finally {

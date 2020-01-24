@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
+import { useMutation } from '@apollo/react-hooks'
 import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
-import { DELETE_POST } from './queries'
-import { useMutation } from '@apollo/react-hooks'
-import { POSTS_QUERY } from '../Posts/queries'
+import { POSTS_QUERY, DELETE_POST } from '../../queries'
 
 const PostPreviewMenu = ({ postId }: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -18,7 +17,7 @@ const PostPreviewMenu = ({ postId }: any) => {
 
   const handleDelete = () => {
     deletePost({
-      variables: {id: postId},
+      variables: { id: postId },
       update: (store, { data }) => {
         if (!data) return null
 
@@ -52,7 +51,7 @@ const PostPreviewMenu = ({ postId }: any) => {
         <MenuItem onClick={() => {
           handleClose()
           handleDelete()
-          }}
+        }}
         >
           Delete
         </MenuItem>

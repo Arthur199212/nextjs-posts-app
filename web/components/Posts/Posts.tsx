@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { Container, Typography, Grid } from '@material-ui/core'
 import { PostPreview } from '../'
-import { POSTS_QUERY } from './queries'
+import { POSTS_QUERY } from '../../queries'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

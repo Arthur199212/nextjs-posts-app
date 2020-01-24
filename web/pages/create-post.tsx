@@ -1,14 +1,13 @@
 import Router from 'next/router'
-import { useApolloClient } from '@apollo/react-hooks'
+import { useApolloClient, useMutation } from '@apollo/react-hooks'
 import { Formik, Form } from 'formik'
 import { Container, Paper, Typography, Button } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { withApollo } from '../lib/apollo'
-import { registerSchema } from '../validation'
 import { Layout, MyTextField } from '../components'
-import { register } from '../utils'
-import { ME_QUERY } from '../queries'
-import { registerRequestDocument } from '../types'
+import { postSchema } from '../validation'
+import { POSTS_QUERY, CREATE_POST } from '../queries'
+import { postDocument } from '../types'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,63 +29,54 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 const initialValues = {
-  name: '',
-  email: '',
-  password: '',
-  passwordConfirmation: ''
+  title: '',
+  body: ''
 }
 
-const formFields: any = [
-  {
-    name: 'name',
-    type: 'input',
-    label: 'Name'
-  },
-  {
-    name: 'email',
-    type: 'input',
-    label: 'Email'
-  },
-  {
-    name: 'password',
-    type: 'password',
-    label: 'Password'
-  },
-  {
-    name: 'passwordConfirmation',
-    type: 'password',
-    label: 'Password confirmation'
-  }
-]
-
-const Register = () => {
+const CreatePost = () => {
   const classes = useStyles()
 
+  const [createPost] = useMutation(CREATE_POST)
   const client = useApolloClient()
 
-  const handleSubmit = async (values: registerRequestDocument, { setSubmitting, resetForm }: any) => {
+  const handleSubmit = async (values: any, { setSubmitting, resetForm }: any) => {
     try {
       setSubmitting(true)
 
-      const res = await register(values)
+      const { title, body } = values
 
-      const { user: { id, name } } = res
+      createPost({
+        variables: { title, body },
+        update: (store, { data }) => {
+          if (!data) return null
 
-      client.writeQuery({
-        query: ME_QUERY,
-        data: {
-          me: {
-            id, name, __typename: 'QUERY'
-          },
+          const createdPost: postDocument = data.createPost
+
+          const { posts }: any = store.readQuery({
+            query: POSTS_QUERY
+          })
+
+          store.writeQuery({
+            query: POSTS_QUERY,
+            data: {
+              posts: [...posts, createdPost]
+            }
+          })
         }
       })
 
-      Router.push('/')
+      client.writeQuery({
+        query: CREATE_POST,
+        data: {
+          createPost: null
+        }
+      })
     } catch (err) {
       console.log(err)
     } finally {
       setSubmitting(false)
       resetForm()
+      Router.push('/')
     }
   }
 
@@ -95,26 +85,33 @@ const Register = () => {
       <Container maxWidth='md'>
         <Paper className={classes.paper}>
           <Typography variant='h5' component='h2'>
-            Register
+            Create post
           </Typography>
 
           <Formik
             initialValues={initialValues}
-            validationSchema={registerSchema}
+            validationSchema={postSchema}
             onSubmit={handleSubmit}
           >{({ isSubmitting, errors }) => (
             <Form className={classes.form}>
-              {formFields.map(({ name, type, label }: any) => (
-                <MyTextField
-                  key={`register-input-field-${name}`}
-                  className={classes.input}
-                  name={name}
-                  type={type}
-                  label={label}
-                  fullWidth
-                  errors={errors}
-                />
-              ))}
+              <MyTextField
+                name='title'
+                type='input'
+                label='Post Title'
+                margin='dense'
+                fullWidth
+                autoComplete='off'
+              />
+              <MyTextField
+                name='body'
+                type='input'
+                label='Post description...'
+                margin='dense'
+                fullWidth
+                multiline
+                rows='5'
+                rowsMax='10'
+              />
               <Button
                 className={classes.button}
                 variant='contained'
@@ -122,7 +119,7 @@ const Register = () => {
                 type='submit'
                 disabled={isSubmitting}
               >
-                Submit
+                Publish
               </Button>
             </Form>
           )}
@@ -133,4 +130,4 @@ const Register = () => {
   )
 }
 
-export default withApollo(Register)
+export default withApollo(CreatePost)

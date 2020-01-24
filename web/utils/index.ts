@@ -1,5 +1,5 @@
 import { loginRequestDocument, registerRequestDocument } from '../types'
-import { LOGIN_URL, REGISTER_URL } from '../config'
+import { LOGIN_URL, REGISTER_URL, LOGOUT_URL } from '../config'
 
 export const logIn = async (data: loginRequestDocument) => {
   try {
@@ -27,6 +27,19 @@ export const register = async (data: registerRequestDocument) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
+    })
+
+    return await res.json()
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const logOut = async () => {
+  try {
+    const res = await fetch(LOGOUT_URL, {
+      method: 'POST',
+      credentials: 'include'
     })
 
     return await res.json()
