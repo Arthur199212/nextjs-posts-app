@@ -8,7 +8,6 @@ interface Context {
 
 export default {
   Query: {
-    hello: () => 'Hello world!',
     posts: async (parent: any, args: any, { req, res }: Context, info: any) => {
       const post = await Post.find({})
 

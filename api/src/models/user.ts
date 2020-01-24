@@ -3,6 +3,7 @@ import { hash, compare } from 'bcryptjs'
 import { BCRYPT_WORK_FACTOR } from '../config/auth'
 
 interface UserDocument extends Document {
+  name: string,
   email: string,
   password: string,
   matchesPassword: (password: string) => Promise<boolean>

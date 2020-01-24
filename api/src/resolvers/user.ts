@@ -8,6 +8,11 @@ interface Context {
 
 export default {
   Query: {
+    me: async (parent: any, args: any, { req, res }: Context, info: any) => {
+      const { userId } = req.session!
+
+      return await User.findById(userId)
+    },
     users: async (parent: any, args: any, contex: Context, info: any) => {
       const users = await User.find({})
 
