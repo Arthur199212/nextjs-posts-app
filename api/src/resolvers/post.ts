@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { Post, User } from '../models'
+import { isPostAuthor } from '../auth'
 
 interface Context {
   req: Request,
@@ -14,6 +15,8 @@ export default {
       return post
     },
     post: async (parent: any, args: any, ctx: Context, info: any) => {
+      // TODO pagination (with skip & limit methods)
+
       const { id } = args
 
       if (!id) throw new Error('Bad Request')
@@ -30,6 +33,8 @@ export default {
     createPost: async (parent: any, args: any, { req, res }: Context, info: any) => {
       const { title, body } = args
 
+      if (!title || !body) throw new Error('Bad Request')
+
       const { userId } = req.session!
 
       const post = await Post.create({
@@ -44,10 +49,12 @@ export default {
 
       return post
     },
-    updatePost: async (parent: any, args: any, ctx: Context, info: any) => {
+    updatePost: async (parent: any, args: any, { req, res }: Context, info: any) => {
       const { id, title, body } = args
 
       if (!title || !body) throw new Error('Bad Request')
+
+      await isPostAuthor(req, id)
 
       const post = await Post.findOneAndUpdate(
         { _id: id },
@@ -58,8 +65,10 @@ export default {
 
       return 'OK'
     },
-    deletePost: async (parent: any, args: any, ctx: Context, info: any) => {
+    deletePost: async (parent: any, args: any, { req, res }: Context, info: any) => {
       const { id } = args
+
+      await isPostAuthor(req, id)
 
       const post = await Post.deleteOne({ _id: id })
 

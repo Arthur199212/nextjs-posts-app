@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { SESSION_NAME } from './config'
 import { Unatherized } from './errors'
+import { Post } from './models'
 
 export const logIn = (req: Request, userId: string) =>
   req.session!.userId = userId
@@ -29,4 +30,12 @@ export const ensureLoggedOut = (req: Request) => {
   if (isLoggedIn(req)) {
     throw new Unatherized('You are already logged in.')
   }
+}
+
+export const isPostAuthor = async (req: Request, postId: string) => {
+  const { userId } = req.session!
+
+  const post = await Post.findById(postId)
+
+  if (!post || post.user != userId) throw new Error('Bad Request')
 }

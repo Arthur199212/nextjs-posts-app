@@ -1,13 +1,7 @@
-import { Schema, model, Document } from 'mongoose'
+import { Schema, model } from 'mongoose'
 import { hash, compare } from 'bcryptjs'
 import { BCRYPT_WORK_FACTOR } from '../config/auth'
-
-interface UserDocument extends Document {
-  name: string,
-  email: string,
-  password: string,
-  matchesPassword: (password: string) => Promise<boolean>
-}
+import { UserDocument } from '../types'
 
 const userSchema = new Schema({
   name: String,

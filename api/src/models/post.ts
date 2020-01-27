@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import { PostDocument } from '../types'
 
 const postSchema = new Schema({
   title: String,
@@ -18,4 +19,4 @@ postSchema.set('toJSON', {
   })
 })
 
-export const Post = model('Post', postSchema)
+export const Post = model<PostDocument>('Post', postSchema)
