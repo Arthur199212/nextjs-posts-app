@@ -1,13 +1,16 @@
 import Router from 'next/router'
 import { useApolloClient, useMutation } from '@apollo/react-hooks'
+import { compose } from 'redux'
+import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
 import { Container, Paper, Typography, Button } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { withApollo } from '../lib/apollo'
+import { withApollo, withRedux } from '../lib'
 import { Layout, MyTextField } from '../components'
 import { postSchema } from '../validation'
 import { POSTS_QUERY, CREATE_POST } from '../queries'
 import { postDocument } from '../types'
+import { showNotification } from '../redux/actions'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,6 +38,8 @@ const initialValues = {
 
 const CreatePost = () => {
   const classes = useStyles()
+
+  const dispatch = useDispatch()
 
   const [createPost] = useMutation(CREATE_POST)
   const client = useApolloClient()
@@ -71,6 +76,11 @@ const CreatePost = () => {
           createPost: null
         }
       })
+
+      dispatch(showNotification({
+        status: 'success',
+        message: 'Post successfully created.'
+      }))
     } catch (err) {
       console.log(err)
     } finally {
@@ -130,4 +140,4 @@ const CreatePost = () => {
   )
 }
 
-export default withApollo(CreatePost)
+export default compose(withApollo, withRedux)(CreatePost)

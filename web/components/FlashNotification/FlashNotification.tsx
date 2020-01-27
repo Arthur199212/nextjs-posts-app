@@ -1,39 +1,33 @@
 import React from 'react'
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert'
-
-const styles = {
-  container: {
-    width: '100%'
-  }
-}
-
-function Alert(props: AlertProps) {
-  return <MuiAlert elevation={6} variant='filled' {...props} />
-}
+import { useSelector, useDispatch } from 'react-redux'
+import MuiAlert from '@material-ui/lab/Alert'
+import { Snackbar } from '@material-ui/core'
+import { hideNotification } from '../../redux/actions'
 
 const FlashNotification = () => {
-  const [open, setOpen] = React.useState(false)
+  const notification = useSelector(({ notification }: any) => notification)
 
-  const handleClick = () => {
-    setOpen(true)
-  }
+  const dispatch = useDispatch()
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
-      return
-    }
+    if (reason === 'clickaway') return
 
-    setOpen(false)
+    dispatch(hideNotification())
   }
 
-  if (!open) return null
+  if (!notification.show) return null
 
   return (
-    <div style={styles.container}>
-      <Alert onClose={handleClose} severity='info'>
-        This is a success message!
-      </Alert>
-    </div>
+    <Snackbar open={notification.show} autoHideDuration={6000} onClose={handleClose}>
+      <MuiAlert
+        elevation={6}
+        variant='filled'
+        severity={notification.status}
+        onClose={handleClose}
+      >
+        {notification.message}
+      </MuiAlert>
+    </Snackbar>
   )
 }
 

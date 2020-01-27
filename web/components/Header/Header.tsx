@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react'
 import Link from 'next/link'
+import { useDispatch } from 'react-redux'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { Button, Container, Toolbar, Typography } from '@material-ui/core'
 import { logOut } from '../../utils'
 import { useQuery, useApolloClient } from '@apollo/react-hooks'
 import { ME_QUERY } from '../../queries'
+import { showNotification } from '../../redux/actions'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,12 +33,27 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Header = () => {
   const classes = useStyles()
-  const client = useApolloClient()
 
-  const { data } = useQuery(ME_QUERY)
+  const client = useApolloClient()
+  
+  const dispatch = useDispatch()
+
+  const { data } = useQuery(ME_QUERY, { ssr: false })
 
   const handleLogout = async () => {
     const res = await logOut()
+      .then(res => {
+        dispatch(showNotification({
+          status: 'success',
+          message: 'Successfully logged out.'
+        }))
+      })
+      .catch(err => {
+        dispatch(showNotification({
+          status: 'error',
+          message: err.message
+        }))
+      })
 
     client.writeQuery({
       query: ME_QUERY,

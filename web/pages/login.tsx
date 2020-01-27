@@ -1,14 +1,17 @@
 import Router from 'next/router'
 import { useApolloClient } from '@apollo/react-hooks'
+import { compose } from 'redux'
+import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
 import { Container, Paper, Typography, Button } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { withApollo } from '../lib/apollo'
+import { withApollo, withRedux } from '../lib'
 import { loginSchema } from '../validation'
 import { Layout, MyTextField } from '../components'
 import { logIn } from '../utils'
 import { ME_QUERY } from '../queries'
 import { loginRequestDocument } from '../types'
+import { showNotification } from '../redux/actions'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,6 +55,8 @@ const Login = () => {
 
   const client = useApolloClient()
 
+  const dispatch = useDispatch()
+
   const handleSubmit = async (values: loginRequestDocument, { setSubmitting, resetForm }: any) => {
     try {
       setSubmitting(true)
@@ -68,6 +73,11 @@ const Login = () => {
           },
         }
       })
+
+      dispatch(showNotification({
+        status: 'success',
+        message: 'Successfully logged in.'
+      }))
 
       Router.push('/')
     } catch (err) {
@@ -121,4 +131,4 @@ const Login = () => {
   )
 }
 
-export default withApollo(Login)
+export default compose(withRedux, withApollo)(Login)

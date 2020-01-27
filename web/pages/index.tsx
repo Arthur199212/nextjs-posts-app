@@ -1,5 +1,6 @@
 import { Layout, Posts, Poster } from '../components'
-import { withApollo } from '../lib/apollo'
+import { withApollo, withRedux } from '../lib'
+import { compose } from 'redux'
 
 const Home = () => (
   <Layout>
@@ -8,4 +9,4 @@ const Home = () => (
   </Layout>
 )
 
-export default withApollo(Home)
+export default compose(withRedux, withApollo)(Home)

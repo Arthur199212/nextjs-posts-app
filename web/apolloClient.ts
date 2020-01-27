@@ -1,22 +1,43 @@
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import withApollo from 'next-with-apollo'
 import { createHttpLink } from 'apollo-link-http'
+import { onError } from 'apollo-link-error'
 import fetch from 'isomorphic-unfetch'
+import { getReduxStore } from './redux/redux-store'
+import { showNotification } from './redux/actions'
 
 const GRAPHQL_URL = 'http://localhost:4000/graphql'
 
-const link = createHttpLink({
-  fetch,
-  uri: GRAPHQL_URL
+const httpLink = createHttpLink({
+  uri: GRAPHQL_URL,
+  credentials: 'include',
+  fetch
 })
 
-export default withApollo(
-  ({ headers, ctx, initialState }) =>
-    new ApolloClient({
-      link,
-      cache: new InMemoryCache()
-        //  rehydrate the cache using the initial data passed from the server:
-        .restore(initialState || {})
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.map(({ message, locations, path }) => {
+      console.error(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+
+      const store = getReduxStore()
+
+      store.dispatch(
+        showNotification({
+          status: 'error',
+          message
+        })
+      )
     })
-)
+  if (networkError) console.log(`[Network error]: ${networkError}`)
+})
+
+const createApolloClient = (initialState = {}) => 
+  new ApolloClient({
+    ssrMode: typeof window === 'undefined',
+    link: errorLink.concat(httpLink),
+    cache: new InMemoryCache().restore(initialState)
+  })
+
+export default createApolloClient
