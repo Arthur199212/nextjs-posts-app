@@ -40,6 +40,7 @@ docker exec -it nextjs-app_db_1 mongo -u admin -p secret auth
 ### Front-End
 
 - Next.js + React 16.8+
+- Redux
 - TypeScript
 - Apollo Client
 - Material-UI
