@@ -37,5 +37,5 @@ export const isPostAuthor = async (req: Request, postId: string) => {
 
   const post = await Post.findById(postId)
 
-  if (!post || post.user != userId) throw new Error('Bad Request')
+  if (!post || post.user != userId) throw new Error('You are not author of the post.')
 }
