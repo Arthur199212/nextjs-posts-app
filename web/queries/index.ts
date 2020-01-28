@@ -42,3 +42,18 @@ export const ME_QUERY = gql`
     }
   }
 `
+
+export const POST_QUERY = gql`
+  query Post($id: ID!) {
+    post(id: $id) {
+      id
+      title
+      body
+      createdAt
+      user {
+        id
+        name
+      }
+    }
+  }
+`

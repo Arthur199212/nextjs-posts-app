@@ -1,9 +1,15 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import {
-  Card, CardHeader, CardMedia, CardContent, Avatar, Typography
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  Avatar,
+  Typography
 } from '@material-ui/core'
 import { postDocument } from '../../types'
+import Link from 'next/link'
 import { PostPreviewMenu } from '../'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -15,11 +21,13 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 345
     },
     cardContent: {
-      flexGrow: 1
+      flexGrow: 1,
+      cursor: 'pointer'
     },
     media: {
       height: 0,
-      paddingTop: '56.25%' // 16:9
+      paddingTop: '56.25%', // 16:9
+      cursor: 'pointer'
     },
     header: {
       marginBottom: 10
@@ -51,20 +59,24 @@ const PostPreview: FC<postPreviewProps> = ({ post = initialData }) => {
 
   return (
     <Card className={classes.card}>
-      <CardMedia
-        className={classes.media}
-        image='https://blog.logrocket.com/wp-content/uploads/2019/12/state-of-javascript-most-in-demand-frontend-frameworks-in-2020.png'
-        title={title}
-      />
+      <Link href='/post/[id]' as={`/post/${id}`}>
+        <CardMedia
+          className={classes.media}
+          image='https://blog.logrocket.com/wp-content/uploads/2019/12/state-of-javascript-most-in-demand-frontend-frameworks-in-2020.png'
+          title={title}
+        />
+      </Link>
 
-      <CardContent className={classes.cardContent}>
-        <Typography className={classes.header} variant='h6' color='initial' component='h3'>
-          {title}
-        </Typography>
-        <Typography variant='body2' color='textSecondary' component='p'>
-          {body}
-        </Typography>
-      </CardContent>
+      <Link href='/post/[id]' as={`/post/${id}`}>
+        <CardContent className={classes.cardContent}>
+          <Typography className={classes.header} variant='h6' color='initial' component='h3'>
+            {title}
+          </Typography>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            {body}
+          </Typography>
+        </CardContent>
+      </Link>
 
       <CardHeader
         avatar={

@@ -21,14 +21,16 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
       )
 
-      const store = getReduxStore()
-
-      store.dispatch(
-        showNotification({
-          status: 'error',
-          message
-        })
-      )
+      if (!message.includes('You must be logged in')) {
+        const store = getReduxStore()
+  
+        store.dispatch(
+          showNotification({
+            status: 'error',
+            message
+          })
+        )
+      }
     })
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })

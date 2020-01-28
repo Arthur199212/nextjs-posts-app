@@ -8,6 +8,14 @@ const Layout: FC = ({ children }) => (
     <Header />
     <FlashNotification />
     {children}
+
+    <style jsx global>
+      {`
+        body {
+          background-color: #fff
+        }
+      `}
+    </style>
   </>
 )
 

@@ -2,6 +2,7 @@ import React from 'react'
 
 const styles = {
   poster: {
+    marginTop: '-25px',
     width: '100%',
     maxHeight: 630,
     overflow: 'hidden',

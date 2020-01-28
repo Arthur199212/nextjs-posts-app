@@ -10,6 +10,10 @@ import { showNotification } from '../../redux/actions'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    headerContainer: {
+      boxShadow: '0 2px 2px -2px rgba(0,0,0,.15)',
+      marginBottom: 25
+    },
     root: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -26,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: 'pointer'
     },
     buttonsContainer: {
-      display: 'flex',
+      display: 'flex'
     }
   }),
 )
@@ -35,7 +39,7 @@ const Header = () => {
   const classes = useStyles()
 
   const client = useApolloClient()
-  
+
   const dispatch = useDispatch()
 
   const { data } = useQuery(ME_QUERY, { ssr: false })
@@ -64,43 +68,45 @@ const Header = () => {
   }
 
   return (
-    <Container maxWidth='lg'>
-      <Toolbar className={classes.root}>
-        <Link href='/'>
-          <Typography className={classes.title} variant='h6'>
-            Posts App
+    <div className={classes.headerContainer}>
+      <Container maxWidth='lg'>
+        <Toolbar className={classes.root}>
+          <Link href='/'>
+            <Typography className={classes.title} variant='h6'>
+              Posts App
           </Typography>
-        </Link>
-        <div className={classes.buttonsContainer}>
-          {(!data?.me) && (
-            <Fragment>
-              <Link href='/register'>
-                <Button className={classes.menuButton} color='primary'>Register</Button>
-              </Link>
+          </Link>
+          <div className={classes.buttonsContainer}>
+            {(!data?.me) && (
+              <Fragment>
+                <Link href='/register'>
+                  <Button className={classes.menuButton} color='primary'>Register</Button>
+                </Link>
 
-              <Link href='/login'>
-                <Button className={classes.menuButton} color='primary'>Login</Button>
-              </Link>
-            </Fragment>
-          )}
+                <Link href='/login'>
+                  <Button className={classes.menuButton} color='primary'>Login</Button>
+                </Link>
+              </Fragment>
+            )}
 
-          {data?.me && (
-            <Fragment>
-              <Link href='/create-post'>
-                <Button className={classes.menuButton} color='primary'>Create post</Button>
-              </Link>
-              <Button
-                className={classes.menuButton}
-                color='primary'
-                onClick={handleLogout}
-              >
-                Logout
+            {data?.me && (
+              <Fragment>
+                <Link href='/create-post'>
+                  <Button className={classes.menuButton} color='primary'>Create post</Button>
+                </Link>
+                <Button
+                  className={classes.menuButton}
+                  color='primary'
+                  onClick={handleLogout}
+                >
+                  Logout
             </Button>
-            </Fragment>
-          )}
-        </div>
-      </Toolbar>
-    </Container>
+              </Fragment>
+            )}
+          </div>
+        </Toolbar>
+      </Container>
+    </div>
   )
 }
 

@@ -15,26 +15,6 @@ const PostPreviewMenu = ({ postId }: any) => {
 
   const handleClose = () => setAnchorEl(null)
 
-  const handleDelete = () => {
-    deletePost({
-      variables: { id: postId },
-      update: (store, { data }) => {
-        if (!data) return null
-
-        const { posts }: any = store.readQuery({
-          query: POSTS_QUERY
-        })
-
-        store.writeQuery({
-          query: POSTS_QUERY,
-          data: {
-            posts: posts.filter((post: any) => post.id !== postId)
-          }
-        })
-      }
-    })
-  }
-
   return (
     <div>
       <IconButton aria-label='settings' onClick={handleClick}>
@@ -47,11 +27,11 @@ const PostPreviewMenu = ({ postId }: any) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Edit</MenuItem>
-        <MenuItem onClick={() => {
-          handleClose()
-          handleDelete()
-        }}
+        <MenuItem onClick={handleClose}
+        >
+          Edit
+        </MenuItem>
+        <MenuItem onClick={handleClose}
         >
           Delete
         </MenuItem>
