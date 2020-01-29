@@ -10,13 +10,6 @@ const body = Yup.string()
   .min(8, 'Minimum length is 8 characters')
   .max(5000, 'Maximum length is 5 000 characters')
   .required('The field is required')
-  
-const imageUrlRequired = Yup.string()
-  .min(8, 'Minimum length is 8 characters')
-  .max(256, 'Maximum length is 256 characters')
-  .url('URL is not valid')
-  .trim()
-  .required('The field is required')
 
 const imageUrl = Yup.string()
   .min(8, 'Minimum length is 8 characters')
@@ -33,5 +26,5 @@ export const createPostSchema = Yup.object().shape({
 export const editPostSchema = Yup.object().shape({
   title,
   body,
-  imageUrlRequired
+  imageUrl: imageUrl.required('The field is required')
 })
