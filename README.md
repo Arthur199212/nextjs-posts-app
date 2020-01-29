@@ -2,7 +2,7 @@
 
 ### :construction: under construction
 
-API
+MVP
 - [x] Can register
 - [x] Can login
 - [x] Can logout
