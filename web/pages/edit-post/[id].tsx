@@ -8,10 +8,9 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { withApollo, withRedux } from '../../lib'
 import { Layout, MyTextField } from '../../components'
 import { postSchema } from '../../validation'
-import { POST_QUERY, POSTS_QUERY, CREATE_POST } from '../../queries'
+import { POST_QUERY, POSTS_QUERY, UPDATE_POST } from '../../queries'
 import { postDocument } from '../../types'
 import { showNotification } from '../../redux/actions'
-import { useState, useEffect } from 'react'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,7 +41,7 @@ const EditPost = () => {
 
   const dispatch = useDispatch()
 
-  const [createPost] = useMutation(CREATE_POST)
+  const [updatePost] = useMutation(UPDATE_POST)
   
   const client = useApolloClient()
 
@@ -51,43 +50,53 @@ const EditPost = () => {
   const { id } = router.query
 
   const { data } = useQuery(POST_QUERY, { variables: { id } })
-
+  
+  if (data) {
+    initialValues = {
+      title: data.post.title,
+      body: data.post.body
+    }
+  }
+  
   const handleSubmit = async (values: any, { setSubmitting, resetForm }: any) => {
     try {
       setSubmitting(true)
 
       const { title, body } = values
 
-      createPost({
-        variables: { title, body },
+      updatePost({
+        variables: { id, title, body },
         update: (store, { data }) => {
           if (!data) return null
-
-          const createdPost: postDocument = data.createPost
-
+          
+          const updatedPost: postDocument = data.updatePost
+          
           const { posts }: any = store.readQuery({
             query: POSTS_QUERY
           })
 
+          const actualPosts = [...posts.filter((post: any) => post.id !== id), updatedPost]
+            .sort((a, b) => a.createdAt - b.createdAt)
+
           store.writeQuery({
             query: POSTS_QUERY,
             data: {
-              posts: [...posts, createdPost]
+              posts: actualPosts
             }
           })
         }
       })
 
       client.writeQuery({
-        query: CREATE_POST,
+        query: UPDATE_POST,
         data: {
-          createPost: null
+          updatePost: null
         }
       })
 
       dispatch(showNotification({
         status: 'success',
-        message: 'Post successfully created.'
+        message: 'Post successfully updated.'
       }))
     } catch (err) {
       console.log(err)
@@ -110,7 +119,7 @@ const EditPost = () => {
             initialValues={initialValues}
             validationSchema={postSchema}
             onSubmit={handleSubmit}
-          >{({ values, isSubmitting, errors }) => (
+          >{({ isSubmitting }) => (
             <Form className={classes.form}>
               <MyTextField
                 name='title'
@@ -137,11 +146,8 @@ const EditPost = () => {
                 type='submit'
                 disabled={isSubmitting}
               >
-                Publish
+                Update
               </Button>
-              <pre>
-                {JSON.stringify(values, null, 2)}
-              </pre>
             </Form>
           )}
           </Formik>

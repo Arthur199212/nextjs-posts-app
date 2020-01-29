@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import moment from 'moment'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import {
   Card,
@@ -86,7 +87,7 @@ const PostPreview: FC<postPreviewProps> = ({ post = initialData }) => {
           <PostPreviewMenu postId={id} />
         }
         title={name}
-        subheader={createdAt}
+        subheader={moment(+createdAt).format('MMMM Do, YYYY')}
       />
     </Card>
   )
