@@ -31,14 +31,16 @@ export default {
 
   Mutation: {
     createPost: async (parent: any, args: any, { req, res }: Context, info: any) => {
-      const { title, body } = args
+      const { title, body, imageUrl } = args
 
       if (!title || !body) throw new Error('Bad Request')
 
       const { userId } = req.session!
 
+      const postUrl = imageUrl ? imageUrl : `https://picsum.photos/900/500?random=${Math.ceil(Math.random()*100)}`
+
       const post = await Post.create({
-        title, body, user: userId
+        title, body, user: userId, imageUrl: postUrl
       })
 
       await User.updateOne({ _id: { '$in': userId } }, {
@@ -50,15 +52,15 @@ export default {
       return post
     },
     updatePost: async (parent: any, args: any, { req, res }: Context, info: any) => {
-      const { id, title, body } = args
+      const { id, title, body, imageUrl } = args
 
-      if (!title || !body) throw new Error('Bad Request')
+      if (!title || !body || !imageUrl) throw new Error('Bad Request')
 
       await isPostAuthor(req, id)
 
       const post = await Post.findOneAndUpdate(
         { _id: id },
-        { title, body }
+        { title, body, imageUrl }
       )
 
       if (!post) throw new Error('Bad Request')

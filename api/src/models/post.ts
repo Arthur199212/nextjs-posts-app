@@ -4,6 +4,7 @@ import { PostDocument } from '../types'
 const postSchema = new Schema({
   title: String,
   body: String,
+  imageUrl: String,
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
