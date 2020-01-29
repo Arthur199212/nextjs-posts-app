@@ -63,7 +63,7 @@ export default {
 
       if (!post) throw new Error('Bad Request')
 
-      return 'OK'
+      return await Post.findById(id)
     },
     deletePost: async (parent: any, args: any, { req, res }: Context, info: any) => {
       const { id } = args

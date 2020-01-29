@@ -7,9 +7,9 @@ export default gql`
   }
 
   extend type Mutation {
-    createPost(title: String, body: String): Post @auth
-    updatePost(id: ID, title: String, body: String): String @auth
-    deletePost(id: ID): String @auth
+    createPost(title: String!, body: String!): Post @auth
+    updatePost(id: ID!, title: String!, body: String!): Post @auth
+    deletePost(id: ID!): String @auth
   }
 
   type Post {
