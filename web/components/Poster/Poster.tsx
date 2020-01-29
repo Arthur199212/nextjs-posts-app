@@ -16,7 +16,7 @@ const styles = {
 
 const Poster = () => (
   <div style={styles.poster}>
-    <img style={styles.image} src='https://blog.logrocket.com/wp-content/uploads/2019/05/logrocket-blog.jpg' />
+    <img style={styles.image} src='https://picsum.photos/2600/1056' />
   </div>
 )
 

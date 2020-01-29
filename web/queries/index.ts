@@ -1,11 +1,13 @@
 import gql from 'graphql-tag'
 
 export const CREATE_POST = gql`
-  mutation CreatePost($title: String!, $body: String!) {
-    createPost(title: $title, body: $body) {
+  mutation CreatePost($title: String!, $body: String!, $imageUrl: String) {
+    createPost(title: $title, body: $body, imageUrl: $imageUrl) {
       id
       title
       body
+      imageUrl
+      createdAt
       user {
         id
         name
@@ -26,6 +28,7 @@ export const POSTS_QUERY = gql`
       id
       title
       body
+      imageUrl
       createdAt
       user {
         id
@@ -50,6 +53,7 @@ export const POST_QUERY = gql`
       id
       title
       body
+      imageUrl
       createdAt
       user {
         id
@@ -60,11 +64,12 @@ export const POST_QUERY = gql`
 `
 
 export const UPDATE_POST = gql`
-  mutation UpdatePost($id: ID!, $title: String!, $body: String!) {
-    updatePost(id: $id, title: $title, body: $body) {
+  mutation UpdatePost($id: ID!, $title: String!, $body: String!, $imageUrl: String!) {
+    updatePost(id: $id, title: $title, body: $body, imageUrl: $imageUrl) {
       id
       title
       body
+      imageUrl
       createdAt
       user {
         id

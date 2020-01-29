@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 let initialValues = {
   title: '',
-  body: ''
+  body: '',
+  imageUrl: ''
 }
 
 const EditPost = () => {
@@ -42,7 +43,7 @@ const EditPost = () => {
   const dispatch = useDispatch()
 
   const [updatePost] = useMutation(UPDATE_POST)
-  
+
   const client = useApolloClient()
 
   const router = useRouter()
@@ -50,27 +51,28 @@ const EditPost = () => {
   const { id } = router.query
 
   const { data } = useQuery(POST_QUERY, { variables: { id } })
-  
+
   if (data) {
     initialValues = {
       title: data.post.title,
-      body: data.post.body
+      body: data.post.body,
+      imageUrl: data.post.imageUrl
     }
   }
-  
+
   const handleSubmit = async (values: any, { setSubmitting, resetForm }: any) => {
     try {
       setSubmitting(true)
 
-      const { title, body } = values
+      const { title, body, imageUrl } = values
 
       updatePost({
-        variables: { id, title, body },
+        variables: { id, title, body, imageUrl },
         update: (store, { data }) => {
           if (!data) return null
-          
+
           const updatedPost: postDocument = data.updatePost
-          
+
           const { posts }: any = store.readQuery({
             query: POSTS_QUERY
           })
@@ -138,6 +140,14 @@ const EditPost = () => {
                 multiline
                 rows='5'
                 rowsMax='10'
+              />
+              <MyTextField
+                name='imageUrl'
+                type='input'
+                label='Post image link'
+                margin='dense'
+                fullWidth
+                autoComplete='off'
               />
               <Button
                 className={classes.button}

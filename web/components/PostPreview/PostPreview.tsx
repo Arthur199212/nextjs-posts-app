@@ -12,6 +12,7 @@ import {
 import { postDocument } from '../../types'
 import Link from 'next/link'
 import { PostPreviewMenu } from '../'
+import { MAX_TITLE_LENGTH, MAX_POST_PREVIEW_LENGTH } from '../../config'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,6 +46,7 @@ const initialData = {
   id: '',
   title: '',
   body: '',
+  imageUrl: '',
   user: { id: '', name: '' },
   createdAt: ''
 }
@@ -56,14 +58,14 @@ interface postPreviewProps {
 const PostPreview: FC<postPreviewProps> = ({ post = initialData }) => {
   const classes = useStyles()
 
-  const { id, title, body, user: { name }, createdAt } = post
+  const { id, title, body, imageUrl, user: { name }, createdAt } = post
 
   return (
     <Card className={classes.card}>
       <Link href='/post/[id]' as={`/post/${id}`}>
         <CardMedia
           className={classes.media}
-          image='https://blog.logrocket.com/wp-content/uploads/2019/12/state-of-javascript-most-in-demand-frontend-frameworks-in-2020.png'
+          image={imageUrl}
           title={title}
         />
       </Link>
@@ -71,10 +73,12 @@ const PostPreview: FC<postPreviewProps> = ({ post = initialData }) => {
       <Link href='/post/[id]' as={`/post/${id}`}>
         <CardContent className={classes.cardContent}>
           <Typography className={classes.header} variant='h6' color='initial' component='h3'>
-            {title}
+            {title.length <= MAX_TITLE_LENGTH ? title : `${title.slice(0, MAX_TITLE_LENGTH)}...`}
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
-            {body}
+            {body.length <= MAX_POST_PREVIEW_LENGTH ?
+              body
+              : `${body.slice(0, MAX_POST_PREVIEW_LENGTH)}...`}
           </Typography>
         </CardContent>
       </Link>

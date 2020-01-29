@@ -57,7 +57,7 @@ const Post = () => {
 
   if (loading && !data) return 'Loading ...'
 
-  const { title, body, createdAt, user: { name } } = data.post
+  const { title, body, imageUrl, createdAt, user: { name } } = data.post
 
   return (
     <Layout>
@@ -91,21 +91,12 @@ const Post = () => {
         </Typography>
 
         <img
-          src='https://i0.wp.com/blog.logrocket.com/wp-content/uploads/2019/11/web-layouts-like-its-2020-nocdn.jpg?fit=730%2C487&ssl=1'
+          src={imageUrl}
           style={styles.poster}
         />
 
         <Typography variant='body1' color='textPrimary' gutterBottom style={styles.text}>
           {body}
-        </Typography>
-        <Typography variant='body1' color='textPrimary' gutterBottom style={styles.text}>
-          If you ever get the feeling that designers and developers are from different worlds, you should have seen what it was like 10 or 20 years ago. In the early days of the internet, we were building websites while trying to figure out what a website was and how it should work.
-        </Typography>
-        <Typography variant='body1' color='textPrimary' gutterBottom style={styles.text}>
-          If you ever get the feeling that designers and developers are from different worlds, you should have seen what it was like 10 or 20 years ago. In the early days of the internet, we were building websites while trying to figure out what a website was and how it should work.
-        </Typography>
-        <Typography variant='body1' color='textPrimary' gutterBottom style={styles.text}>
-          If you ever get the feeling that designers and developers are from different worlds, you should have seen what it was like 10 or 20 years ago. In the early days of the internet, we were building websites while trying to figure out what a website was and how it should work.
         </Typography>
       </Container>
     </Layout>

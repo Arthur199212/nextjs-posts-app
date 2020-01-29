@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const initialValues = {
   title: '',
-  body: ''
+  body: '',
+  imageUrl: ''
 }
 
 const CreatePost = () => {
@@ -48,10 +49,10 @@ const CreatePost = () => {
     try {
       setSubmitting(true)
 
-      const { title, body } = values
+      const { title, body, imageUrl } = values
 
       createPost({
-        variables: { title, body },
+        variables: { title, body, imageUrl },
         update: (store, { data }) => {
           if (!data) return null
 
@@ -102,7 +103,7 @@ const CreatePost = () => {
             initialValues={initialValues}
             validationSchema={postSchema}
             onSubmit={handleSubmit}
-          >{({ isSubmitting, errors }) => (
+          >{({ isSubmitting }) => (
             <Form className={classes.form}>
               <MyTextField
                 name='title'
@@ -121,6 +122,14 @@ const CreatePost = () => {
                 multiline
                 rows='5'
                 rowsMax='10'
+              />
+              <MyTextField
+                name='imageUrl'
+                type='input'
+                label='Post image link'
+                margin='dense'
+                fullWidth
+                autoComplete='off'
               />
               <Button
                 className={classes.button}
