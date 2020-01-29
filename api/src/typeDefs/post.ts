@@ -2,8 +2,9 @@ import { gql } from 'apollo-server-express'
 
 export default gql`
   extend type Query {
-    posts: [Post!]!
+    posts(page: Int): [Post!]!
     post(id: ID!): Post
+    postsCount: Int!
   }
 
   extend type Mutation {

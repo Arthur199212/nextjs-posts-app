@@ -9,14 +9,16 @@ interface Context {
 
 export default {
   Query: {
-    posts: async (parent: any, args: any, { req, res }: Context, info: any) => {
-      const post = await Post.find({})
+    posts: async (parent: any, { page }: any, { req, res }: Context, info: any) => {
+      const chunk = 9
 
-      return post
+      const skip = page ? page * chunk : 0
+
+      const posts = await Post.find({}).skip(skip).limit(chunk)
+
+      return posts
     },
     post: async (parent: any, args: any, ctx: Context, info: any) => {
-      // TODO pagination (with skip & limit methods)
-
       const { id } = args
 
       if (!id) throw new Error('Bad Request')
@@ -27,6 +29,11 @@ export default {
 
       return post
     },
+    postsCount: async (parent: any, args: any, { req, res }: Context, info: any) =>{
+      const count = await Post.collection.count()
+
+      return count
+    }
   },
 
   Mutation: {
