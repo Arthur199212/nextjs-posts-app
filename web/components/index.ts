@@ -1,3 +1,5 @@
+export * from './BottomPagination'
+
 export * from './FlashNotification'
 
 export * from './Header'

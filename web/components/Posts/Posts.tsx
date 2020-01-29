@@ -4,6 +4,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { Container, Typography, Grid } from '@material-ui/core'
 import { PostPreview } from '../'
 import { POSTS_QUERY } from '../../queries'
+import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,7 +32,11 @@ const useStyles = makeStyles((theme: Theme) =>
 const Posts = () => {
   const classes = useStyles()
 
-  const { data } = useQuery(POSTS_QUERY)
+  const router = useRouter()
+
+  const { page } = router.query
+
+  const { data } = useQuery(POSTS_QUERY, { variables: { page: page ? +page : 0 } })
 
   return (
     <Container maxWidth='md'>

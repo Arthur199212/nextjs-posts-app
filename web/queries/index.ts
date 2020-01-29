@@ -23,8 +23,8 @@ export const DELETE_POST = gql`
 `
 
 export const POSTS_QUERY = gql`
-  {
-    posts {
+  query Posts($page: Int) {
+    posts(page: $page) {
       id
       title
       body
@@ -76,5 +76,11 @@ export const UPDATE_POST = gql`
         name
       }
     }
+  }
+`
+
+export const POSTS_COUNT = gql`
+  {
+    postsCount
   }
 `

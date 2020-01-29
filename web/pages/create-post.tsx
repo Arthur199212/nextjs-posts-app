@@ -7,7 +7,7 @@ import { Container, Paper, Typography, Button } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { withApollo, withRedux } from '../lib'
 import { Layout, MyTextField } from '../components'
-import { postSchema } from '../validation'
+import { createPostSchema } from '../validation'
 import { POSTS_QUERY, CREATE_POST } from '../queries'
 import { postDocument } from '../types'
 import { showNotification } from '../redux/actions'
@@ -101,7 +101,7 @@ const CreatePost = () => {
 
           <Formik
             initialValues={initialValues}
-            validationSchema={postSchema}
+            validationSchema={createPostSchema}
             onSubmit={handleSubmit}
           >{({ isSubmitting }) => (
             <Form className={classes.form}>
