@@ -1,5 +1,5 @@
 import Router, { useRouter } from 'next/router'
-import { useApolloClient, useMutation, useQuery } from '@apollo/react-hooks'
+import { useMutation, useQuery } from '@apollo/react-hooks'
 import { compose } from 'redux'
 import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
@@ -8,8 +8,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { withApollo, withRedux } from '../../lib'
 import { Layout, MyTextField } from '../../components'
 import { editPostSchema } from '../../validation'
-import { POST_QUERY, POSTS_QUERY, UPDATE_POST } from '../../queries'
-import { postDocument } from '../../types'
+import { POST_QUERY, UPDATE_POST } from '../../queries'
 import { showNotification } from '../../redux/actions'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -44,8 +43,6 @@ const EditPost = () => {
 
   const [updatePost] = useMutation(UPDATE_POST)
 
-  const client = useApolloClient()
-
   const router = useRouter()
 
   const { id } = router.query
@@ -66,35 +63,7 @@ const EditPost = () => {
 
       const { title, body, imageUrl } = values
 
-      updatePost({
-        variables: { id, title, body, imageUrl },
-        update: (store, { data }) => {
-          if (!data) return null
-
-          const updatedPost: postDocument = data.updatePost
-
-          const { posts }: any = store.readQuery({
-            query: POSTS_QUERY
-          })
-
-          const actualPosts = [...posts.filter((post: any) => post.id !== id), updatedPost]
-            .sort((a, b) => a.createdAt - b.createdAt)
-
-          store.writeQuery({
-            query: POSTS_QUERY,
-            data: {
-              posts: actualPosts
-            }
-          })
-        }
-      })
-
-      client.writeQuery({
-        query: UPDATE_POST,
-        data: {
-          updatePost: null
-        }
-      })
+      updatePost({ variables: { id, title, body, imageUrl } })
 
       dispatch(showNotification({
         status: 'success',
@@ -104,8 +73,8 @@ const EditPost = () => {
       console.log(err)
     } finally {
       setSubmitting(false)
-      resetForm()
-      Router.push('/')
+
+      Router.back()
     }
   }
 

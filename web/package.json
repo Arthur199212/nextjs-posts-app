@@ -25,6 +25,7 @@
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
     "isomorphic-unfetch": "^3.0.0",
+    "json2mq": "^0.2.0",
     "moment": "^2.24.0",
     "next": "^9.2.0",
     "next-with-apollo": "^4.3.0",
@@ -36,6 +37,7 @@
     "yup": "^0.28.0"
   },
   "devDependencies": {
+    "@types/json2mq": "^0.2.0",
     "@types/node": "^13.1.7",
     "@types/react": "^16.9.17",
     "@types/react-redux": "^7.1.7",

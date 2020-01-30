@@ -36,7 +36,10 @@ const Posts = () => {
 
   const { page } = router.query
 
-  const { data } = useQuery(POSTS_QUERY, { variables: { page: page ? +page : 0 } })
+  const { data } = useQuery(POSTS_QUERY, {
+    variables: { page: page ? +page : 0 },
+    fetchPolicy: 'no-cache'
+  })
 
   return (
     <Container maxWidth='md'>

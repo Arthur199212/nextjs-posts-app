@@ -1,5 +1,5 @@
 import { loginRequestDocument, registerRequestDocument } from '../types'
-import { LOGIN_URL, REGISTER_URL, LOGOUT_URL } from '../config'
+import { LOGIN_URL, REGISTER_URL, LOGOUT_URL, PAGINATION_BUTTONS_ON_PAGE } from '../config'
 
 export const logIn = async (data: loginRequestDocument) => {
   try {
@@ -45,5 +45,26 @@ export const logOut = async () => {
     return await res.json()
   } catch (err) {
     console.log(err)
+  }
+}
+
+export const pagination = (page: number, count: number) => {
+  const arr = new Array(count).fill('').map((_, i) => i)
+
+  let resArr
+
+  if (!page) resArr = arr.slice(0, PAGINATION_BUTTONS_ON_PAGE)
+
+  resArr = page < PAGINATION_BUTTONS_ON_PAGE - 1 ?
+    arr.slice(0, PAGINATION_BUTTONS_ON_PAGE)
+    : page > count - PAGINATION_BUTTONS_ON_PAGE ?
+      arr.slice(-PAGINATION_BUTTONS_ON_PAGE)
+      : arr.slice(page - 1, page + PAGINATION_BUTTONS_ON_PAGE - 1)
+
+  resArr.indexOf(page)
+
+  return {
+    pagesList: resArr,
+    selectedTab: resArr.indexOf(page)
   }
 }

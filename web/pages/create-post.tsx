@@ -1,5 +1,5 @@
 import Router from 'next/router'
-import { useApolloClient, useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import { compose } from 'redux'
 import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
@@ -8,8 +8,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { withApollo, withRedux } from '../lib'
 import { Layout, MyTextField } from '../components'
 import { createPostSchema } from '../validation'
-import { POSTS_QUERY, CREATE_POST } from '../queries'
-import { postDocument } from '../types'
+import { CREATE_POST } from '../queries'
 import { showNotification } from '../redux/actions'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -43,7 +42,6 @@ const CreatePost = () => {
   const dispatch = useDispatch()
 
   const [createPost] = useMutation(CREATE_POST)
-  const client = useApolloClient()
 
   const handleSubmit = async (values: any, { setSubmitting, resetForm }: any) => {
     try {
@@ -51,32 +49,7 @@ const CreatePost = () => {
 
       const { title, body, imageUrl } = values
 
-      createPost({
-        variables: { title, body, imageUrl },
-        update: (store, { data }) => {
-          if (!data) return null
-
-          const createdPost: postDocument = data.createPost
-
-          const { posts }: any = store.readQuery({
-            query: POSTS_QUERY
-          })
-
-          store.writeQuery({
-            query: POSTS_QUERY,
-            data: {
-              posts: [...posts, createdPost]
-            }
-          })
-        }
-      })
-
-      client.writeQuery({
-        query: CREATE_POST,
-        data: {
-          createPost: null
-        }
-      })
+      createPost({ variables: { title, body, imageUrl } })
 
       dispatch(showNotification({
         status: 'success',
@@ -86,7 +59,9 @@ const CreatePost = () => {
       console.log(err)
     } finally {
       setSubmitting(false)
+
       resetForm()
+
       Router.push('/')
     }
   }
