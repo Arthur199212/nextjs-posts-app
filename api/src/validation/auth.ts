@@ -21,16 +21,24 @@ const password = Joi.string()
   .regex(/^(?=.*?[\p{Lu}])(?=.*?[\p{Ll}])(?=.*?\d).*$/u)
   .message(
     '"{#label}" must contain one uppercase letter, one lowercase letter, and one digit'
-  )
+    )
   .required()
 
 const passwordConfirmation = Joi.valid(Joi.ref('password'))
+
+const avatarUrl = Joi.string()
+  .min(8)
+  .max(254)
+  .trim()
+  .uri()
+  .allow('')
 
 export const registerSchema = Joi.object({
   name,
   email,
   password,
-  passwordConfirmation
+  passwordConfirmation,
+  avatarUrl
 })
 
 export const loginSchema = Joi.object({

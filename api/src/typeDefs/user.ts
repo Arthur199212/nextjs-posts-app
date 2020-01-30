@@ -10,6 +10,7 @@ export default gql`
     id: ID!
     name: String!
     email: String!
+    avatarUrl: String!
     posts: [Post!]!
     createdAt: String!
     updatedAt: String!
