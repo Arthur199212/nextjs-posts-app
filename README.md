@@ -1,8 +1,6 @@
 # nextjs-app
 
-### :construction: under construction
-
-MVP
+### MVP
 - [x] Can register
 - [x] Can login
 - [x] Can logout
