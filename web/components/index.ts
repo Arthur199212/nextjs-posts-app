@@ -10,6 +10,8 @@ export * from './MobileHeader'
 
 export * from './MyTextField'
 
+export * from './NotFound'
+
 export * from './Poster'
 
 export * from './PostPreview'

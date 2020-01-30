@@ -8,9 +8,9 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import { Container, Typography, Avatar } from '@material-ui/core'
 import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons'
 import { withApollo, withRedux } from '../../lib'
-import { Layout } from '../../components'
+import { Layout, NotFound } from '../../components'
 import { showNotification } from '../../redux/actions'
-import { POST_QUERY, DELETE_POST, POSTS_QUERY, ME_QUERY } from '../../queries'
+import { POST_QUERY, DELETE_POST, ME_QUERY } from '../../queries'
 import styles from './styles'
 
 const Post = () => {
@@ -22,7 +22,7 @@ const Post = () => {
 
   const { data: meData } = useQuery(ME_QUERY, { ssr: false })
 
-  const { data, loading } = useQuery(POST_QUERY, { variables: { id }, ssr: false })
+  const { data, loading, error } = useQuery(POST_QUERY, { variables: { id }, ssr: false })
 
   const [deletePost] = useMutation(DELETE_POST)
 
@@ -40,6 +40,8 @@ const Post = () => {
   }
 
   if (loading && !data) return 'Loading ...'
+
+  if (error) return <NotFound />
 
   const { title, body, imageUrl, createdAt, user: { name, avatarUrl } } = data.post
 
