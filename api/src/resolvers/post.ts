@@ -14,7 +14,7 @@ export default {
 
       const skip = page ? page * chunk : 0
 
-      const posts = await Post.find({}).skip(skip).limit(chunk)
+      const posts = await Post.find({}).skip(skip).limit(chunk).sort({ createdAt: -1 })
 
       return posts
     },
