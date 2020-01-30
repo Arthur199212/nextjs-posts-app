@@ -15,6 +15,10 @@ export interface postDocument {
   title: string
   body: string
   imageUrl: string
-  user: { id: string, name: string },
+  user: {
+    id: string,
+    name: string,
+    avatarUrl: string
+  },
   createdAt: string
 }

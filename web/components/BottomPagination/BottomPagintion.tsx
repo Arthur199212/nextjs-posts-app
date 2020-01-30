@@ -19,7 +19,7 @@ const BottomPagintion = () => {
 
   const { page } = router.query
 
-  const { data } = useQuery(POSTS_COUNT, { fetchPolicy: 'no-cache' })
+  const { data, loading } = useQuery(POSTS_COUNT, { fetchPolicy: 'no-cache' })
 
   let countOfPosts = 0
 
@@ -32,6 +32,8 @@ const BottomPagintion = () => {
       minWidth: 600,
     })
   )
+
+  if (pagesList.length <= 1 || loading) return null
 
   return (
     <Container maxWidth='md' style={{ margin: '20px auto' }}>

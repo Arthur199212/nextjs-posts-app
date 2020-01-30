@@ -33,11 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     header: {
       marginBottom: 10
-    },
-    avatar: {
-      backgroundImage: 'url("https://i2.wp.com/blog.logrocket.com/wp-content/uploads/2019/04/austinroyomondi.jpeg?resize=150%2C150&ssl=1")',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center'
     }
   })
 )
@@ -47,7 +42,7 @@ const initialData = {
   title: '',
   body: '',
   imageUrl: '',
-  user: { id: '', name: '' },
+  user: { id: '', name: '', avatarUrl: '' },
   createdAt: ''
 }
 
@@ -58,7 +53,7 @@ interface postPreviewProps {
 const PostPreview: FC<postPreviewProps> = ({ post = initialData }) => {
   const classes = useStyles()
 
-  const { id, title, body, imageUrl, user: { name }, createdAt } = post
+  const { id, title, body, imageUrl, user: { name, avatarUrl }, createdAt } = post
 
   return (
     <Card className={classes.card}>
@@ -85,7 +80,7 @@ const PostPreview: FC<postPreviewProps> = ({ post = initialData }) => {
 
       <CardHeader
         avatar={
-          <Avatar aria-label='post' className={classes.avatar}> </Avatar>
+          <Avatar aria-label='post' src={avatarUrl}> </Avatar>
         }
         action={
           <PostPreviewMenu postId={id} />

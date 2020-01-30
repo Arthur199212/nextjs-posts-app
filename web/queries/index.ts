@@ -33,6 +33,7 @@ export const POSTS_QUERY = gql`
       user {
         id
         name
+        avatarUrl
       }
     }
   }
@@ -43,6 +44,7 @@ export const ME_QUERY = gql`
     me {
       id
       name
+      avatarUrl
     }
   }
 `
@@ -58,6 +60,7 @@ export const POST_QUERY = gql`
       user {
         id
         name
+        avatarUrl
       }
     }
   }

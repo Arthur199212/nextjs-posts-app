@@ -31,9 +31,16 @@ const passwordConfirmation = Yup.string()
   .oneOf([Yup.ref('password'), null], 'Confirmation password must match password')
   .required('The field is required')
 
+const avatarUrl = Yup.string()
+  .min(8, 'Minimum length is 8 characters')
+  .max(256, 'Maximum length is 256 characters')
+  .url('URL is not valid')
+  .trim()
+
 export const registerSchema = Yup.object().shape({
   name,
   email,
+  avatarUrl,
   password,
   passwordConfirmation
 })

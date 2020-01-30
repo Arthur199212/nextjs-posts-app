@@ -29,23 +29,7 @@ const Post = () => {
   const handleDelete = () => {
     // TODO confirm deleting
 
-    deletePost({
-      variables: { id },
-      update: (store, { data }) => {
-        if (!data) return null
-
-        const { posts }: any = store.readQuery({
-          query: POSTS_QUERY
-        })
-
-        store.writeQuery({
-          query: POSTS_QUERY,
-          data: {
-            posts: posts.filter((post: any) => post.id !== id)
-          }
-        })
-      }
-    })
+    deletePost({ variables: { id } })
 
     dispatch(showNotification({
       status: 'info',
@@ -57,13 +41,13 @@ const Post = () => {
 
   if (loading && !data) return 'Loading ...'
 
-  const { title, body, imageUrl, createdAt, user: { name } } = data.post
+  const { title, body, imageUrl, createdAt, user: { name, avatarUrl } } = data.post
 
   return (
     <Layout>
       <Container maxWidth='sm' style={styles.root}>
         <div style={styles.cardBox}>
-          <Avatar src='https://material-ui.com/static/images/avatar/1.jpg' style={styles.avatar} />
+          <Avatar src={avatarUrl} style={styles.avatar} />
           <div style={styles.autorBox}>
             <Typography variant='body1' color='textPrimary' gutterBottom>
               {name}

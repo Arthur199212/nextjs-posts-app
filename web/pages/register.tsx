@@ -36,7 +36,8 @@ const initialValues = {
   name: '',
   email: '',
   password: '',
-  passwordConfirmation: ''
+  passwordConfirmation: '',
+  avatarUrl: ''
 }
 
 const formFields: any = [
@@ -59,6 +60,11 @@ const formFields: any = [
     name: 'passwordConfirmation',
     type: 'password',
     label: 'Password confirmation'
+  },
+  {
+    name: 'avatarUrl',
+    type: 'input',
+    label: 'Your avatar url'
   }
 ]
 
@@ -74,14 +80,14 @@ const Register = () => {
       setSubmitting(true)
 
       const res = await register(values)
-
-      const { user: { id, name } } = res
+      
+      const { user: { id, name, avatarUrl } } = res
 
       client.writeQuery({
         query: ME_QUERY,
         data: {
           me: {
-            id, name, __typename: 'QUERY'
+            id, name, avatarUrl, __typename: 'QUERY'
           },
         }
       })
