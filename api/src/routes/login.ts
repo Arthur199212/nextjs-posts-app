@@ -20,7 +20,12 @@ router.post('/login', guest, catchAsync(async (req, res) => {
 
   logIn(req, user.id)
 
-  res.json({ message: 'OK', user: { id: user.id, name: user.name } })
+  res.json({ message: 'OK', user: {
+    id: user.id,
+    name: user.name,
+    avatarUrl: user.avatarUrl
+  }
+})
 }))
 
 router.post('/logout', auth, catchAsync(async (req, res) => {
