@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react'
 import Link from 'next/link'
 import { useDispatch } from 'react-redux'
+import json2mq from 'json2mq'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import { Button, Container, Toolbar, Typography } from '@material-ui/core'
+import { Button, Container, Toolbar, Typography, useMediaQuery } from '@material-ui/core'
+import { MobileHeader } from '../'
 import { logOut } from '../../utils'
 import { useQuery, useApolloClient } from '@apollo/react-hooks'
 import { ME_QUERY } from '../../queries'
@@ -32,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
     buttonsContainer: {
       display: 'flex'
     }
-  }),
+  })
 )
 
 const Header = () => {
@@ -44,9 +46,15 @@ const Header = () => {
 
   const { data } = useQuery(ME_QUERY, { ssr: false })
 
+  const matches = useMediaQuery(
+    json2mq({
+      minWidth: 600,
+    })
+  )
+
   const handleLogout = async () => {
-    const res = await logOut()
-      .then(res => {
+    await logOut()
+      .then(() => {
         dispatch(showNotification({
           status: 'success',
           message: 'Successfully logged out.'
@@ -66,6 +74,8 @@ const Header = () => {
       }
     })
   }
+
+  if (!matches) return <MobileHeader />
 
   return (
     <div className={classes.headerContainer}>

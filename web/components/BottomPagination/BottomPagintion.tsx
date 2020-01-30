@@ -38,11 +38,13 @@ const BottomPagintion = () => {
   return (
     <Container maxWidth='md' style={{ margin: '20px auto' }}>
       <div style={{ display: 'flex', justifyContent: 'center', padding: 10, borderTop: '1px solid #e2e2e2' }}>
-      <Link href='/page/[page]' as={`/page/${0}`}>
-        <Button color='primary'>
-          First
-        </Button>
-      </Link>
+      {matches && (
+        <Link href='/page/[page]' as={`/page/${0}`}>
+          <Button color='primary'>
+            First
+          </Button>
+        </Link>
+      )}
 
       <Tabs
         value={selectedTab}
@@ -61,11 +63,13 @@ const BottomPagintion = () => {
         ))}
       </Tabs>
 
-      <Link href='/page/[page]' as={`/page/${countOfPosts ? countOfPosts - 1 : 0}`}>
-        <Button color='primary'>
-          Last
-        </Button>
-      </Link>
+      {matches && (
+        <Link href='/page/[page]' as={`/page/${countOfPosts ? countOfPosts - 1 : 0}`}>
+          <Button color='primary'>
+            Last
+          </Button>
+        </Link>
+      )}
       </div>
     </Container>
   )

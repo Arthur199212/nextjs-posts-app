@@ -7,11 +7,12 @@ import {
   CardMedia,
   CardContent,
   Avatar,
-  Typography
+  Typography,
+  IconButton
 } from '@material-ui/core'
+import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import { postDocument } from '../../types'
 import Link from 'next/link'
-import { PostPreviewMenu } from '../'
 import { MAX_TITLE_LENGTH, MAX_POST_PREVIEW_LENGTH } from '../../config'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -83,7 +84,9 @@ const PostPreview: FC<postPreviewProps> = ({ post = initialData }) => {
           <Avatar aria-label='post' src={avatarUrl}> </Avatar>
         }
         action={
-          <PostPreviewMenu postId={id} />
+          <IconButton>
+            <MoreVertIcon />
+          </IconButton>
         }
         title={name}
         subheader={moment(+createdAt).format('MMMM Do, YYYY')}

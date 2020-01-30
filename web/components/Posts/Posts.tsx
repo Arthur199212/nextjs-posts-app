@@ -53,7 +53,7 @@ const Posts = () => {
 
       <Grid container spacing={3}>
         {data && data.posts.map((post: any) => (
-          <Grid className={classes.post} item xs={4} key={post.id} >
+          <Grid key={post.id} item xs={12} sm={6} md={4} className={classes.post} >
             <PostPreview post={post} />
           </Grid>
         ))}

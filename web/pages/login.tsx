@@ -63,13 +63,13 @@ const Login = () => {
 
       const res = await logIn(values)
 
-      const { user: { id, name } } = res
+      const { user: { id, name, avatarUrl } } = res
 
       client.writeQuery({
         query: ME_QUERY,
         data: {
           me: {
-            id, name, __typename: 'QUERY'
+            id, name, avatarUrl, __typename: 'QUERY'
           },
         }
       })
